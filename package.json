@@ -1,0 +1,48 @@
+{
+  "name": "fema",
+  "version": "1.0.0",
+  "description": "A Frontend State Machine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy": "cp src/index.html dist/index.html",
+    "build": "npm run copy && esbuild src/app.ts --bundle --outfile=dist/fema.js",
+    "watch": "npm run copy && esbuild src/app.ts --bundle --watch --outfile=dist/fema.js",
+    "serve": "http-server ./dist",
+    "lint": "eslint ./src --ext .ts",
+    "clean": "rm -rf ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kvnlnt/fema.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kvnlnt/fema/issues"
+  },
+  "homepage": "https://github.com/kvnlnt/fema#readme",
+  "dependencies": {
+    "esbuild": "^0.11.10"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "6.0.0",
+    "lint-staged": "11.0.0"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  }
+}
