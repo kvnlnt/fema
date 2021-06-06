@@ -1,6 +1,6 @@
-import { Actor } from './actor';
-import { Machine } from './Machine';
-import { send } from './Messaging';
+import { Actor } from '../../../src/Actor';
+import { Machine } from '../../../src/Machine';
+import { send } from '../../../src/Messaging';
 
 // Define an Actor and it's message types
 type GreetActorMessages = { type: 'HELLO'; name: string } | { type: 'GOODBYE'; name: string };
