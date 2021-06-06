@@ -2,41 +2,19 @@ import { Actor } from './actor';
 import { Machine } from './Machine';
 import { send } from './Messaging';
 
+// Define an Actor and it's message types
 type GreetActorMessages = { type: 'HELLO'; name: string } | { type: 'GOODBYE'; name: string };
 class GreetActor extends Actor<GreetActorMessages> {
   constructor() {
     super('HELLO');
   }
   message(message: GreetActorMessages) {
-    switch (this.state) {
+    switch (message.type) {
       case 'HELLO':
         console.log('hello', message.name);
-        this.state = 'GOODBYE';
         break;
       case 'GOODBYE':
         console.log('goodbye', message.name);
-        this.state = 'HELLO';
-        break;
-      default:
-        break;
-    }
-  }
-}
-
-type InsultActorMessages = { type: 'YURDUMB'; name: string } | { type: 'YURUGLY'; name: string };
-class InsultActor extends Actor<InsultActorMessages> {
-  constructor() {
-    super('YURDUMB');
-  }
-  message(message: InsultActorMessages) {
-    switch (this.state) {
-      case 'YURDUMB':
-        console.log('yurdumb', message.name);
-        this.state = 'YURUGLY';
-        break;
-      case 'YURUGLY':
-        console.log('yurugly', message.name);
-        this.state = 'YURDUMB';
         break;
       default:
         break;
@@ -45,9 +23,11 @@ class InsultActor extends Actor<InsultActorMessages> {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const machine = Machine<GreetActor | InsultActor>();
+  // Create a machine
+  const machine = Machine<GreetActor>();
+  // Create an actor and retrieve it's address
   const greetInbox = machine.assign(GreetActor);
-  const insultInbox = machine.assign(InsultActor);
+  // Send a message to an actor at an address
   send<GreetActorMessages>(greetInbox, { type: 'HELLO', name: 'Kevin' });
-  send<InsultActorMessages>(insultInbox, { type: 'YURDUMB', name: 'Kevin' });
+  send<GreetActorMessages>(greetInbox, { type: 'GOODBYE', name: 'Kevin' });
 });
