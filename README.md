@@ -18,7 +18,7 @@ import { Actor } from './actor';
 import { Machine } from './Machine';
 import { send } from './Messaging';
 
-// Define an Actor and it's message types
+// Define an Actor and its message types
 type GreetActorMessages = { type: 'HELLO'; name: string } | { type: 'GOODBYE'; name: string };
 class GreetActor extends Actor<GreetActorMessages> {
   constructor() {
