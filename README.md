@@ -41,7 +41,7 @@ class GreetActor extends Actor<GreetActorMessages> {
 window.addEventListener('DOMContentLoaded', () => {
   // Create a machine
   const machine = Machine<GreetActor>();
-  // Create an actor and retrieve it's address
+  // Create an actor and retrieve its address
   const greetInbox = machine.assign(GreetActor);
   // Send a message to an actor at an address
   send<GreetActorMessages>(greetInbox, { type: 'HELLO', name: 'Kevin' });
