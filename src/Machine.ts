@@ -1,10 +1,10 @@
 import { Actor } from './actor';
 import { getNextUniqueId, inbox } from './Messaging';
 
-export const Machine = <T>() => {
+export const Machine = <ActorClass>() => {
   return {
-    assign: <U, V>(
-      actor: { new (): T extends Actor<U, V> ? T : never },
+    assign: <States, Messages>(
+      actor: { new (): ActorClass extends Actor<States, Messages> ? ActorClass : never },
       address: string | number = getNextUniqueId(),
     ) => {
       inbox(address, new actor().envelope);
