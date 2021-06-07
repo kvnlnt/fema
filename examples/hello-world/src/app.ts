@@ -3,18 +3,21 @@ import { Machine } from '../../../src/Machine';
 import { send } from '../../../src/Messaging';
 
 // Define an Actor and it's message types
-type GreetActorMessages = { type: 'HELLO'; name: string } | { type: 'GOODBYE'; name: string };
-class GreetActor extends Actor<GreetActorMessages> {
+type GreetActorStates = 'HELLO' | 'GOODBYE';
+type GreetActorMessages = { type: 'FORMAL'; name: string } | { type: 'INFORMAL'; name: string };
+class GreetActor extends Actor<GreetActorStates, GreetActorMessages> {
   constructor() {
     super('HELLO');
   }
   message(message: GreetActorMessages) {
-    switch (message.type) {
+    switch (this.state) {
       case 'HELLO':
-        console.log('hello', message.name);
+        console.log(message.type === 'FORMAL' ? 'Greetings' : 'Sup', message.name);
+        this.state = 'GOODBYE';
         break;
       case 'GOODBYE':
-        console.log('goodbye', message.name);
+        console.log(message.type === 'FORMAL' ? 'Good Evening' : 'Later', message.name);
+        this.state = 'HELLO';
         break;
       default:
         break;
@@ -28,6 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // Create an actor and retrieve it's address
   const greetInbox = machine.assign(GreetActor);
   // Send a message to an actor at an address
-  send<GreetActorMessages>(greetInbox, { type: 'HELLO', name: 'Kevin' });
-  send<GreetActorMessages>(greetInbox, { type: 'GOODBYE', name: 'Kevin' });
+  send<GreetActorMessages>(greetInbox, { type: 'FORMAL', name: 'my friend' });
+  send<GreetActorMessages>(greetInbox, { type: 'FORMAL', name: 'my friend' });
+  send<GreetActorMessages>(greetInbox, { type: 'INFORMAL', name: 'Chicken Butt?' });
+  send<GreetActorMessages>(greetInbox, { type: 'INFORMAL', name: 'Gator' });
 });

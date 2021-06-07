@@ -1,9 +1,10 @@
 import { Queue } from './Queue';
 
-export class Actor<Messages> {
-  protected state: Messages[keyof Pick<Messages, Extract<keyof Messages, 'type'>>];
+export class Actor<States, Messages> {
+  protected state: States;
   protected queue: Queue<Messages>;
-  constructor(state: Messages[keyof Pick<Messages, Extract<keyof Messages, 'type'>>]) {
+  protected messageType: Messages[keyof Pick<Messages, Extract<keyof Messages, 'type'>>];
+  constructor(state: States) {
     this.state = state;
     this.queue = new Queue<Messages>();
     this.message = this.message.bind(this);

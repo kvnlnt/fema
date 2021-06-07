@@ -4,11 +4,11 @@
   "description": "A Frontend State Machine",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild examples/hello-world/src/app.ts --bundle --outfile=examples/hello-world/fema.js",
-    "watch": "esbuild examples/hello-world/src/app.ts --bundle --watch --outfile=examples/hello-world/fema.js",
-    "serve": "http-server examples",
-    "lint": "eslint ./src --ext .ts"
+    "test": "node tasks/test && node ./test/tmp/test",
+    "build": "node tasks/build",
+    "watch": "node tasks/build --watch",
+    "lint": "eslint ./src --ext .ts",
+    "clean":"rm -rf examples/**/*.js"
   },
   "repository": {
     "type": "git",
