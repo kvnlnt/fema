@@ -4,9 +4,9 @@
   "description": "A Frontend State Machine",
   "main": "index.js",
   "scripts": {
-    "test": "node tasks/test && node ./test/tmp/test",
-    "build": "node tasks/build",
-    "watch": "node tasks/build --watch",
+    "test": "node scripts/test && node ./test/fema.test && rm ./test/fema.test.js",
+    "build": "node scripts/build",
+    "watch": "node scripts/build --watch",
     "lint": "eslint ./src --ext .ts",
     "clean":"rm -rf examples/**/*.js"
   },
