@@ -1,6 +1,8 @@
+import { Address } from './Machine';
 import { Queue } from './Queue';
 
 export class Actor<States, Messages> {
+  public address: Address;
   protected state: States;
   protected queue: Queue<Messages>;
   protected messageType: Messages[keyof Pick<Messages, Extract<keyof Messages, 'type'>>];
